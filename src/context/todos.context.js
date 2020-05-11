@@ -1,6 +1,7 @@
 // all methods to interact w/ todos
 import React, { createContext } from "react";
-import useTodoState from "../hooks/useTodoState";
+import { useLocalStorageReducer } from "../hooks/useLocalStorageReducer";
+import todoReducer from "../reducers/todo.reducer.js";
 
 const defaultTodos = [
   { id: 1, task: "Buy dog food", completed: false },
@@ -8,13 +9,20 @@ const defaultTodos = [
 ];
 
 export const TodosContext = createContext();
+export const DispatchContext = createContext();
 
 export function TodosProvider(props) {
-  const todoStuff = useTodoState(defaultTodos);
+  const [todos, dispatch] = useLocalStorageReducer(
+    "todos",
+    defaultTodos,
+    todoReducer
+  );
 
   return (
-    <TodosContext.Provider value={todoStuff}>
-      {props.children}
+    <TodosContext.Provider value={todos}>
+      <DispatchContext.Provider value={dispatch}>
+        {props.children}
+      </DispatchContext.Provider>
     </TodosContext.Provider>
   );
 }

@@ -1,5 +1,4 @@
 import React from "react";
-import useTodoState from "./hooks/useTodoState";
 import { TodosProvider } from "./context/todos.context";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
